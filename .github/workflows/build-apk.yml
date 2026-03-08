@@ -9,14 +9,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
 
-    - name: Install dependencies
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install system dependencies
       run: |
         sudo apt update
-        sudo apt install -y zip unzip openjdk-17-jdk python3-pip
+        sudo apt install -y zip unzip openjdk-17-jdk python3-pip git
+
+    - name: Install Buildozer
+      run: |
         pip install buildozer cython
+
+    - name: Install Android SDK
+      run: |
+        mkdir -p $HOME/android-sdk
+        cd $HOME/android-sdk
+        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+        unzip commandlinetools-linux-*.zip
+        mkdir cmdline-tools/latest
+        mv cmdline-tools/* cmdline-tools/latest/
+        yes | cmdline-tools/latest/bin/sdkmanager --licenses
+        cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-31" "build-tools;31.0.0"
 
     - name: Build APK
       run: |
