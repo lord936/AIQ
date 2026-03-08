@@ -24,14 +24,21 @@ jobs:
 
     - name: Install Android SDK
       run: |
-        mkdir -p $HOME/android-sdk
-        cd $HOME/android-sdk
-        wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
-        unzip commandlinetools-linux-*.zip
-        mkdir cmdline-tools/latest
-        mv cmdline-tools/* cmdline-tools/latest/
-        yes | cmdline-tools/latest/bin/sdkmanager --licenses
-        cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-31" "build-tools;31.0.0"
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          cd $HOME/android-sdk
+      
+          wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+      
+          unzip commandlinetools-linux-*.zip
+      
+          mv cmdline-tools cmdline-tools/latest
+      
+          yes | cmdline-tools/latest/bin/sdkmanager --licenses
+      
+          cmdline-tools/latest/bin/sdkmanager \
+            "platform-tools" \
+            "platforms;android-31" \
+            "build-tools;31.0.0"
 
     - name: Build APK
       run: |
