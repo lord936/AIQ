@@ -13,6 +13,8 @@ import datetime
 import database
 from kivy.lang import Builder
 from kivy.uix.popup import Popup
+from kivy.core.window import Window
+Window.size = (360,640)
 
 
 class Dashboardscreen(Screen):
