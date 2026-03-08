@@ -1,0 +1,265 @@
+Manager:
+    Dashboardscreen:
+        name: "dashboard"
+    Addsubjectscreen:
+        name: "add_subject"
+    Timetablescreen:
+        name: "time_table"
+    Settingscreen:
+        name: "settings"
+
+
+<Dashboardscreen>:
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+
+        Label:
+            text: "AttendIQ"
+            font_size: 36
+            size_hint_y: None
+            height: 70
+
+        Label:
+            text: "Total Percentage"
+            font_size: 30
+            size_hint_y: None
+            height: 60
+
+        BoxLayout:
+            id: Overall_container
+            orientation: "vertical"
+
+        ProgressBar:
+            max: 100
+            value: root.manager.overall_percentage_value
+            size_hint_y: None
+            height: 20
+
+        Label:
+            id: next_class
+            text: "Next Class"
+            font_size: 24
+
+        Button:
+            text: "Add Subject"
+            size_hint_y: None
+            height: 50
+            on_press:
+                app.root.current = "add_subject"
+        Button:
+            text: "Time Table"
+            size_hint_y: None
+            height: 50
+            on_press:
+                app.root.current = "time_table"
+        Button:
+            text: "settings"
+            size_hint_y: None
+            height:50
+            on_press:
+                app.root.current ="settings"
+
+        Label:
+            text: "Subjects"
+            font_size: 24
+            size_hint_y: None
+            height: 80
+
+        ScrollView:
+
+            BoxLayout:
+                id: subject_container
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+
+
+<Addsubjectscreen>:
+    
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 15
+
+        Label:
+            text: "Add Subject"
+            font_size: 32
+            size_hint_y: None
+            height: 70
+
+        GridLayout:
+            cols: 2
+            spacing: 10
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 40
+            row_force_default: True
+
+            Label:
+                text: "Subject"
+
+            TextInput:
+                id: subject
+                multiline: False
+
+            Label:
+                text: "Attended"
+
+            TextInput:
+                id: attended
+                multiline: False
+
+            Label:
+                text: "Total"
+
+            TextInput:
+                id: total
+                multiline: False
+
+        Button:
+            text: "Save Subject"
+            size_hint_y: None
+            height: 50
+            on_press:
+                root.manager.add_subject(subject.text, attended.text, total.text)
+                subject.text = ""
+                attended.text = ""
+                total.text = ""
+
+        Button:
+            text: "Back"
+            size_hint_y: None
+            height: 50
+            on_press:
+                app.root.current = "dashboard"
+<Timetablescreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding:20
+        spacing:15
+
+        GridLayout:
+            cols:2
+            spacing: 10
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 40
+            row_force_default: True
+
+            Label:
+                text: "Subject"
+
+            TextInput:
+                id: sub
+                multiline: False
+
+            Label:
+                text:"day"
+
+            TextInput:
+                id : day
+                multiline: False
+
+            Label:
+                text: "start time"
+
+            TextInput:
+                id: start_time
+                multiline: False
+
+            Label:
+                text: "end time"
+
+            TextInput:
+                id: end_time
+                multiline: False
+
+        Button:
+            text: "Save time Table"
+            size_hint_y: None
+            height: 50
+            on_press:
+                root.manager.add_time_table(sub.text, day.text, start_time.text, end_time.text)
+                sub.text = ""
+                day.text=""
+                start_time.text = ""
+                end_time.text = ""
+
+
+        Label:
+            text: "Add Time Table"
+            font_size: 32
+            size_hint_y: None
+            height: 70
+
+        GridLayout:
+            cols:2
+            spacing: 10
+            size_hint_y: None
+            height: self.minimum_height
+            row_default_height: 40
+            row_force_default: True
+
+            Label:
+                text: "enter your time tble csv file path"
+            TextInput:
+                id: csv
+        Button:
+            text: "Extract"
+            size_hint_y: None
+            height: 50
+            on_press:
+                root.manager.import_timetable(csv.text)
+                csv.text=""
+            
+        Button:
+            text: "Back"
+            size_hint_y: None
+            height:50
+            on_press:
+                app.root.current="dashboard"
+        Label:
+            text: "Subjects"
+            font_size: 24
+            size_hint_y: None
+            height: 50
+
+        ScrollView:
+
+            BoxLayout:
+                id: timetable_container
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+
+<Settingscreen>:
+    BoxLayout:
+        orientation: "vertical"
+        padding:20
+        spacing:15
+
+        Button:
+            text: "reset"
+            size_hint_y:None
+            height: 50
+            on_press:
+                root.manager.reset_data()
+        
+        Button:
+            text: "Report Issue"
+            size_hint_y:None
+            height: 50
+            on_press: root.manager.report_issue()
+        Button:
+            text: "Back"
+            size_hint_y:None
+            height: 50
+            on_press:
+                app.root.current= "dashboard"
+        
